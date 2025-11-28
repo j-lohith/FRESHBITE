@@ -1,0 +1,380 @@
+/* Profile.css - Fully Mobile-First & Responsive */
+.profile-page {
+  min-height: 100vh;
+  padding: 1.5rem 1rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1920') center/cover;
+  opacity: 0.06;
+  z-index: 0;
+}
+
+.profile-page > * {
+  position: relative;
+  z-index: 1;
+}
+
+.profile-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+}
+
+/* Mobile-First: Sidebar becomes top section */
+.profile-sidebar {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.profile-avatar-large {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-size: 3.5rem;
+  font-weight: bold;
+  margin: 0 auto 1rem;
+  overflow: hidden;
+  border: 5px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.profile-avatar-large img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+}
+
+.profile-name-large {
+  font-size: 1.75rem;
+  color: #2d3748;
+  margin: 0.5rem 0;
+  font-weight: 700;
+}
+
+.profile-email {
+  color: #718096;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.membership-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  color: #333;
+  padding: 0.6rem 1.3rem;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+
+/* Main Content */
+.profile-content {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Tabs - Vertical on Mobile */
+.profile-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  border-bottom: none;
+}
+
+.tab-button {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background: #f8fafc;
+  border: none;
+  border-radius: 16px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.tab-button:hover {
+  background: #eef2ff;
+  color: #667eea;
+  transform: translateX(8px);
+}
+
+.tab-button.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+  transform: translateX(4px);
+}
+
+/* Tab Content */
+.tab-content h3 {
+  font-size: 1.6rem;
+  color: #2d3748;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+
+/* Profile Info Grid */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.2rem;
+}
+
+.info-item {
+  padding: 1.4rem;
+  background: #f8fafc;
+  border-radius: 16px;
+  border-left: 5px solid #667eea;
+}
+
+.info-item label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 0.5rem;
+}
+
+.info-item p {
+  font-size: 1.15rem;
+  color: #1e293b;
+  font-weight: 500;
+}
+
+/* Orders Section */
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.order-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 1.5rem;
+  border: 2px solid #e2e8f0;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.order-card:hover {
+  border-color: #667eea;
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(102, 126, 234, 0.15);
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.order-status {
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.order-items-preview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.8rem;
+  margin: 1rem 0;
+}
+
+.order-item-preview {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: #f8fafc;
+  padding: 0.7rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+}
+
+.order-item-preview img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.order-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 2px dashed #e2e8f0;
+  margin-top: 1rem;
+}
+
+.order-total {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #667eea;
+}
+
+.track-button,
+.empty-state button {
+  padding: 0.9rem 1.8rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.track-button:hover,
+.empty-state button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+}
+
+.addresses-section {
+  padding: 0;
+}
+
+.addresses-section .address-manager {
+  margin-top: 0;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: #94a3b8;
+}
+
+/* Help Section */
+.help-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.help-card {
+  background: #f8fafc;
+  padding: 2rem;
+  border-radius: 20px;
+  text-align: center;
+  border: 2px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.help-card:hover {
+  border-color: #667eea;
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(102, 126, 234, 0.15);
+}
+
+.help-card svg {
+  font-size: 3rem;
+  color: #667eea;
+  margin-bottom: 1rem;
+}
+
+/* FAQ */
+.faq-item {
+  background: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 16px;
+  margin-bottom: 1rem;
+  border-left: 5px solid #667eea;
+}
+
+/* Responsive Breakpoints */
+@media (min-width: 768px) {
+  .profile-container {
+   display: flex;
+   flex-flow: column wrap;
+   gap: 1rem;
+  }
+
+  /* .profile-sidebar {
+    position: sticky;
+    top: 100px;
+    height: fit-content;
+  } */
+
+  .profile-tabs {
+    flex-direction: row;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 1rem;
+  }
+
+  .tab-button {
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+  }
+
+  .info-grid,
+  .help-content {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .order-items-preview {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .info-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .help-content {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-avatar-large {
+    width: 90px;
+    height: 90px;
+    font-size: 2.8rem;
+  }
+
+  .profile-name-large {
+    font-size: 1.5rem;
+  }
+
+  .order-total {
+    font-size: 1.4rem;
+  }
+}

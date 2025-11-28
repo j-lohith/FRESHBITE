@@ -1,0 +1,46 @@
+.delivery-map {
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid #f0dfcf;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+  margin-bottom: 24px;
+}
+
+.delivery-map__canvas {
+  height: 360px;
+}
+
+.delivery-map__info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+  padding: 16px 20px;
+  background: #fffdf9;
+  border-top: 1px solid #f4e3d4;
+}
+
+.delivery-map__label {
+  margin: 0;
+  text-transform: uppercase;
+  color: #9c7a5f;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+}
+
+.delivery-map__status {
+  margin: 4px 0 0;
+  font-size: 1.2rem;
+  text-transform: capitalize;
+  color: #c04a11;
+}
+
+.delivery-map__fallback {
+  padding: 24px;
+  text-align: center;
+  color: #7a6b5c;
+  font-size: 0.95rem;
+  border-radius: 20px;
+  border: 1px dashed #f0dfcf;
+}
+
+
