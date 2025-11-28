@@ -1,4 +1,4 @@
-# Restaurant App - Full Stack Application
+# FRESHBITE - Full Stack Application
 
 A complete full-stack restaurant website with JWT-based user authentication, recipe browsing, and shopping cart functionality.
 

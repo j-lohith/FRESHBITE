@@ -1,4 +1,4 @@
-# 🚀 How to Start the Restaurant App
+# 🚀 How to Start the # FRESHBITE 
 
 ## ⚡ Quick Start Steps
 
