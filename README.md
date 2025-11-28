@@ -108,9 +108,7 @@ Visit `http://localhost:3000` to see the application!
 
 This project is open source and available for educational purposes.
 
-## 👨‍💻 Development
 
-For detailed setup instructions, troubleshooting, and feature documentation, please refer to [START_HERE.md](./START_HERE.md).
 
 ---
 
