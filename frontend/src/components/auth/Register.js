@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import api from "../../utils/axios";
@@ -82,7 +82,10 @@ const Register = () => {
   const handleLocationResolved = (meta) => {
     setLocationMeta(meta);
     if (meta?.formatted_address) {
-      setAddressForm((prev) => ({ ...prev, address_line: meta.formatted_address }));
+      setAddressForm((prev) => ({
+        ...prev,
+        address_line: meta.formatted_address,
+      }));
     }
     setAddressForm((prev) => ({
       ...prev,
@@ -103,7 +106,7 @@ const Register = () => {
     if (!locationMeta?.latitude || !locationMeta?.longitude) {
       setErrors((prev) => ({
         ...prev,
-        submit: "Please pin your delivery location before signing up.",
+        submit: "Please Enter your delivery location before signing up.",
       }));
       return;
     }
@@ -130,26 +133,27 @@ const Register = () => {
         },
       });
 
-      // After registration, login the user
-      const loginResponse = await api.post("/auth/login", {
-        email: registerData.email,
-        password: registerData.password,
-      });
+      // // After registration, login the user
+      // const loginResponse = await api.post("/auth/login", {
+      //   email: registerData.email,
+      //   password: registerData.password,
+      // });
 
-      login(loginResponse.data.token, loginResponse.data.user);
+      // login(loginResponse.data.token, loginResponse.data.user);
 
       try {
         await api.post("/addresses", {
           ...addressForm,
           ...locationMeta,
-          formatted_address: addressForm.address_line || locationMeta.formatted_address,
+          formatted_address:
+            addressForm.address_line || locationMeta.formatted_address,
           is_default: true,
         });
       } catch (addressError) {
         console.error("Saving primary address failed", addressError);
       }
-
-      navigate("/");
+     alert("Account Created Successfully..")
+      navigate("/login");
     } catch (error) {
       setErrors({
         submit:
@@ -183,31 +187,29 @@ const Register = () => {
             )}
           </div>
 
-   
-            <div className="form-group">
-              <label htmlFor="first_name">First Name</label>
-              <input
-                type="text"
-                id="first_name"
-                name="first_name"
-                value={formData.first_name}
-                onChange={handleChange}
-                placeholder="First name"
-              />
-            </div>
+          <div className="form-group">
+            <label htmlFor="first_name">First Name</label>
+            <input
+              type="text"
+              id="first_name"
+              name="first_name"
+              value={formData.first_name}
+              onChange={handleChange}
+              placeholder="First name"
+            />
+          </div>
 
-            <div className="form-group">
-              <label htmlFor="last_name">Last Name</label>
-              <input
-                type="text"
-                id="last_name"
-                name="last_name"
-                value={formData.last_name}
-                onChange={handleChange}
-                placeholder="Last name"
-              />
-            </div>
-       
+          <div className="form-group">
+            <label htmlFor="last_name">Last Name</label>
+            <input
+              type="text"
+              id="last_name"
+              name="last_name"
+              value={formData.last_name}
+              onChange={handleChange}
+              placeholder="Last name"
+            />
+          </div>
 
           <div className="form-group">
             <label htmlFor="email">Email *</label>
@@ -283,7 +285,10 @@ const Register = () => {
                 {/* <p>Allow location or drag the pin to mark your primary drop-off point.</p> */}
               </div>
             </div>
-            <LocationPicker initialValue={null} onLocationResolved={handleLocationResolved} />
+            <LocationPicker
+              initialValue={null}
+              onLocationResolved={handleLocationResolved}
+            />
 
             <div className="form-group">
               <label htmlFor="address_line">Full Address</label>
@@ -322,15 +327,30 @@ const Register = () => {
             <div className="address-inline-grid">
               <div className="form-group">
                 <label htmlFor="city">City</label>
-                <input id="city" name="city" value={addressForm.city} onChange={handleAddressChange} />
+                <input
+                  id="city"
+                  name="city"
+                  value={addressForm.city}
+                  onChange={handleAddressChange}
+                />
               </div>
               <div className="form-group">
                 <label htmlFor="state">State</label>
-                <input id="state" name="state" value={addressForm.state} onChange={handleAddressChange} />
+                <input
+                  id="state"
+                  name="state"
+                  value={addressForm.state}
+                  onChange={handleAddressChange}
+                />
               </div>
               <div className="form-group">
                 <label htmlFor="country">Country</label>
-                <input id="country" name="country" value={addressForm.country} onChange={handleAddressChange} />
+                <input
+                  id="country"
+                  name="country"
+                  value={addressForm.country}
+                  onChange={handleAddressChange}
+                />
               </div>
             </div>
 
