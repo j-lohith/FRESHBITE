@@ -24,7 +24,7 @@ import { CartProvider } from "./context/CartContext";
 import { useLoading } from "./context/LoadingContext";
 import { getToken, removeToken, setToken } from "./utils/auth";
 import api from "./utils/axios";
-import { SamplePage } from "./components/sample";
+
 
 const NavigationLoadingHandler = () => {
   const location = useLocation();
@@ -113,7 +113,6 @@ function App() {
               <Navbar />
               <Routes>
                 <Route path="/page" element={<page />} />
-                <Route path="/sample" element={<SamplePage   />} />
                 <Route
                   path="/login"
                   element={user ? <Navigate to="/" /> : <Login />}
