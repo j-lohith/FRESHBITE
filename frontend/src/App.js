@@ -1,23 +1,30 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
-import { AuthContext } from './context/AuthContext';
-import { CartProvider } from './context/CartContext';
-import { AddressProvider } from './context/AddressContext';
-import { useLoading } from './context/LoadingContext';
-import Login from './components/auth/Login';
-import Register from './components/auth/Register';
-import Profile from './components/auth/Profile';
-import Restaurant from './components/restaurant/Restaurant';
-import CartPage from './components/restaurant/CartPage';
-import ProductDetails from './components/restaurant/ProductDetails';
-import Membership from './components/membership/Membership';
-import DeliveryTracking from './components/orders/DeliveryTracking';
-import Navbar from './components/layout/Navbar';
-import LoadingOverlay from './components/layout/LoadingOverlay';
-import { getToken, removeToken, setToken } from './utils/auth';
-import api from './utils/axios';
-import NotFound from './components/layout/NotFound';
-import Unauthorized401 from './components/layout/Unauthorized401';
+import { useEffect, useRef, useState } from "react";
+import {
+  Navigate,
+  Route,
+  BrowserRouter as Router,
+  Routes,
+  useLocation,
+} from "react-router-dom";
+import Login from "./components/auth/Login";
+import Profile from "./components/auth/Profile";
+import Register from "./components/auth/Register";
+import LoadingOverlay from "./components/layout/LoadingOverlay";
+import Navbar from "./components/layout/Navbar";
+import NotFound from "./components/layout/NotFound";
+import Unauthorized401 from "./components/layout/Unauthorized401";
+import Membership from "./components/membership/Membership";
+import DeliveryTracking from "./components/orders/DeliveryTracking";
+import CartPage from "./components/restaurant/CartPage";
+import ProductDetails from "./components/restaurant/ProductDetails";
+import Restaurant from "./components/restaurant/Restaurant";
+import { AddressProvider } from "./context/AddressContext";
+import { AuthContext } from "./context/AuthContext";
+import { CartProvider } from "./context/CartContext";
+import { useLoading } from "./context/LoadingContext";
+import { getToken, removeToken, setToken } from "./utils/auth";
+import api from "./utils/axios";
+import { SamplePage } from "./components/sample";
 
 const NavigationLoadingHandler = () => {
   const location = useLocation();
@@ -59,14 +66,14 @@ function App() {
     if (token) {
       startLoading();
       api
-        .get('/auth/me')
+        .get("/auth/me")
         .then(({ data }) => {
           if (data?.id) {
             setUser(data);
           }
         })
         .catch((err) => {
-          console.error('Error fetching user:', err);
+          console.error("Error fetching user:", err);
           removeToken();
         })
         .finally(() => {
@@ -105,13 +112,29 @@ function App() {
             <div className="App">
               <Navbar />
               <Routes>
-                <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
-                <Route path="/register" element={user ? <Navigate to="/" /> : <Register />} />
-                <Route path="/profile" element={user ? <Profile /> : <Navigate to="/login" />} />
+                <Route path="/page" element={<page />} />
+                <Route path="/sample" element={<SamplePage   />} />
+                <Route
+                  path="/login"
+                  element={user ? <Navigate to="/" /> : <Login />}
+                />
+                <Route
+                  path="/register"
+                  element={user ? <Navigate to="/" /> : <Register />}
+                />
+                <Route
+                  path="/profile"
+                  element={user ? <Profile /> : <Navigate to="/login" />}
+                />
                 <Route path="/cart" element={<CartPage />} />
                 <Route path="/product/:id" element={<ProductDetails />} />
                 <Route path="/membership" element={<Membership />} />
-                <Route path="/tracking/:orderId" element={user ? <DeliveryTracking /> : <Navigate to="/login" />} />
+                <Route
+                  path="/tracking/:orderId"
+                  element={
+                    user ? <DeliveryTracking /> : <Navigate to="/login" />
+                  }
+                />
                 <Route path="/" element={<Restaurant />} />
                 <Route path="*" element={<NotFound />} />
                 <Route path="/401" element={<Unauthorized401 />} />
@@ -126,4 +149,3 @@ function App() {
 }
 
 export default App;
-
