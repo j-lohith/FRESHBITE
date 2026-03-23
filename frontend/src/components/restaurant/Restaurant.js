@@ -1,21 +1,21 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { motion } from 'framer-motion';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import { AuthContext } from '../../context/AuthContext';
-import { CartContext } from '../../context/CartContext';
-import api from '../../utils/axios';
-import RecipeList from './RecipeList';
-import SearchBar from './SearchBar';
-import CategoryFilter from './CategoryFilter';
-import './Restaurant.css';
+import React, { useState, useEffect, useContext } from "react";
+import { motion } from "framer-motion";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { AuthContext } from "../../context/AuthContext";
+import { CartContext } from "../../context/CartContext";
+import api from "../../utils/axios";
+import RecipeList from "./RecipeList";
+import SearchBar from "./SearchBar";
+import CategoryFilter from "./CategoryFilter";
+import "./Restaurant.css";
 
 const Restaurant = () => {
   const [recipes, setRecipes] = useState([]);
   const [filteredRecipes, setFilteredRecipes] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all");
   const [loading, setLoading] = useState(true);
   const { user } = useContext(AuthContext);
   const { addToCart } = useContext(CartContext);
@@ -25,30 +25,32 @@ const Restaurant = () => {
       id: 1,
       title: "Today's Special Offer",
       subtitle: "Get 20% off on all pizzas",
-      image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1200",
-      color: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+      image:
+        "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1200",
+      color: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
     },
     {
       id: 2,
       title: "Weekend Deals",
       subtitle: "Buy 2 Get 1 Free on desserts",
       image: "https://images.unsplash.com/photo-1551024506-0bccd828d307?w=1200",
-      color: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
+      color: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
     },
     {
       id: 3,
       title: "New Arrivals",
       subtitle: "Try our latest menu items",
-      image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200",
-      color: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
+      image:
+        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200",
+      color: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
     },
     {
       id: 4,
       title: "Flash Sale",
       subtitle: "Up to 50% off on selected items",
       image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=1200",
-      color: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)"
-    }
+      color: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
+    },
   ];
 
   const sliderSettings = {
@@ -60,7 +62,7 @@ const Restaurant = () => {
     autoplay: true,
     autoplaySpeed: 4000,
     fade: true,
-    cssEase: 'linear'
+    cssEase: "linear",
   };
 
   useEffect(() => {
@@ -73,37 +75,54 @@ const Restaurant = () => {
 
   const fetchRecipes = async () => {
     try {
-      const response = await api.get('/recipes');
-      setRecipes(response.data);
-      setFilteredRecipes(response.data);
-      setLoading(false);
+      const response = await api.get("/recipes");
+
+      console.log("API RESPONSE:", response.data); // 🔥 DEBUG
+
+      const data = Array.isArray(response.data) ? response.data : [];
+
+      setRecipes(data);
+      setFilteredRecipes(data);
     } catch (error) {
-      console.error('Error fetching recipes:', error);
+      console.error("Error fetching recipes:", error);
+      setRecipes([]);
+      setFilteredRecipes([]);
+    } finally {
       setLoading(false);
     }
   };
 
   const filterRecipes = () => {
-    let filtered = recipes;
+    let filtered = Array.isArray(recipes) ? [...recipes] : [];
 
-    if (selectedCategory !== 'all') {
-      filtered = filtered.filter(recipe => recipe.category === selectedCategory);
+    if (selectedCategory !== "all") {
+      filtered = filtered.filter(
+        (recipe) => recipe.category === selectedCategory,
+      );
     }
 
     if (searchTerm) {
-      filtered = filtered.filter(recipe =>
-        recipe.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        recipe.description.toLowerCase().includes(searchTerm.toLowerCase())
+      filtered = filtered.filter(
+        (recipe) =>
+          recipe.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          recipe.description?.toLowerCase().includes(searchTerm.toLowerCase()),
       );
     }
 
     setFilteredRecipes(filtered);
   };
 
-  const categories = ['all', ...new Set(recipes.map(recipe => recipe.category))];
+  // ✅ SAFE categories generation
+  const categories = [
+    "all",
+    ...new Set(
+      (Array.isArray(recipes) ? recipes : []).map((recipe) => recipe.category),
+    ),
+  ];
 
   return (
     <div className="restaurant-container">
+      {" "}
       <div className="banner-carousel">
         <Slider {...sliderSettings}>
           {banners.map((banner) => (
@@ -112,42 +131,28 @@ const Restaurant = () => {
                 className="banner-content"
                 style={{ background: banner.color }}
               >
+                {" "}
                 <div className="banner-text">
-                  <motion.h1
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className="banner-title"
-                  >
-                    {banner.title}
-                  </motion.h1>
-                  <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 }}
-                    className="banner-subtitle"
-                  >
+                  <motion.h1 className="banner-title">{banner.title}</motion.h1>
+                  <motion.p className="banner-subtitle">
                     {banner.subtitle}
                   </motion.p>
                   <motion.button
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6 }}
                     className="banner-button"
-                    onClick={() => setSelectedCategory('all')}
+                    onClick={() => setSelectedCategory("all")}
                   >
                     Shop Now
-                  </motion.button>
-                </div>
+                  </motion.button>{" "}
+                </div>{" "}
                 <div className="banner-image">
-                  <img src={banner.image} alt={banner.title} />
-                </div>
-              </div>
+                  {" "}
+                  <img src={banner.image} alt={banner.title} />{" "}
+                </div>{" "}
+              </div>{" "}
             </div>
-          ))}
-        </Slider>
+          ))}{" "}
+        </Slider>{" "}
       </div>
-
       <div className="restaurant-main">
         <div className="restaurant-filters">
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
@@ -160,11 +165,10 @@ const Restaurant = () => {
 
         {loading ? (
           <div className="loading">Loading recipes...</div>
+        ) : filteredRecipes.length === 0 ? (
+          <div className="loading">No recipes found</div>
         ) : (
-          <RecipeList
-            recipes={filteredRecipes}
-            addToCart={addToCart}
-          />
+          <RecipeList recipes={filteredRecipes} addToCart={addToCart} />
         )}
       </div>
     </div>
@@ -172,4 +176,3 @@ const Restaurant = () => {
 };
 
 export default Restaurant;
-
