@@ -1,6 +1,6 @@
 -- Create database if not exists
-CREATE DATABASE IF NOT EXISTS restaurant_db;
-USE restaurant_db;
+-- CREATE DATABASE IF NOT EXISTS restaurant_db;
+-- USE restaurant_db;
 
 -- Create users table
 CREATE TABLE IF NOT EXISTS users (

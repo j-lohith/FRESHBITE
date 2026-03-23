@@ -50,6 +50,32 @@ app.get("/api/health", (req, res) => {
   res.json({ message: "Server is running" });
 });
 
+
+const fs = require("fs");
+const pool = require("./backend/config/db"); // adjust if path different
+
+app.get("/api/init-db", async (req, res) => {
+try {
+let sql = fs.readFileSync("./backend/database.sq", "utf8");
+
+
+// Split multiple queries (IMPORTANT)
+const queries = sql.split(";").filter(q => q.trim() !== "");
+
+for (let query of queries) {
+  await pool.query(query);
+}
+
+res.send("✅ Database Initialized Successfully");
+
+
+} catch (err) {
+console.error("DB INIT ERROR:", err);
+res.status(500).send("❌ Error initializing DB");
+}
+});
+
+
 app.listen(PORT, HOST, () => {
   console.log(`Server is running on http://${HOST}:${PORT}`);
 });
