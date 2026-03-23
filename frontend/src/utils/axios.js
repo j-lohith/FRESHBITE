@@ -14,6 +14,7 @@ const rawApiUrl = normalizeApiUrl(process.env.REACT_APP_API_URL);
 if (!rawApiUrl) {
 console.error("❌ REACT_APP_API_URL is NOT defined!");
 }
+console.log(rawApiUrl)
 
 // ✅ Always construct proper backend API URL
 const apiBaseUrl = rawApiUrl
