@@ -56,7 +56,7 @@ const pool = require("./backend/config/db");
 
 app.get("/api/init-db", async (req, res) => {
 try {
-let sql = fs.readFileSync("./backend/database.sql", "utf8");
+let sql = fs.readFileSync("./backend/config/database.sql", "utf8");
 
 // 🚨 Make sure you already removed:
 // CREATE DATABASE and USE statements
