@@ -1,38 +1,59 @@
 const mysql = require('mysql2/promise');
 require('dotenv').config();
 
-const poolSsl =
-  process.env.DB_SSL === 'true'
-    ? {
-        // Railway/hosted MySQL often requires TLS; this keeps connection working.
-        // If your provider needs strict validation, remove this and set proper CA.
-        rejectUnauthorized: false,
-      }
-    : undefined;
+// 🔥 If MYSQL_URL exists → use it (BEST for Railway)
+let pool;
 
-// Create MySQL connection pool
-const pool = mysql.createPool({
-  host: process.env.DB_HOST || 'localhost',
-  port: process.env.DB_PORT || 3306,
-  database: process.env.DB_NAME || 'restaurant_db',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '',
-  multipleStatements: true,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-  ssl: poolSsl,
+if (process.env.MYSQL_URL) {
+pool = mysql.createPool({
+uri: process.env.MYSQL_URL,
+
+
+waitForConnections: true,
+connectionLimit: 10,
+
+// 🔥 REQUIRED for Railway
+ssl: {
+  rejectUnauthorized: false,
+},
+
+multipleStatements: true,
+
+
+});
+} else {
+// 🔁 Fallback (manual config)
+pool = mysql.createPool({
+host: process.env.DB_HOST || 'localhost',
+port: process.env.DB_PORT || 3306,
+database: process.env.DB_NAME || 'restaurant_db',
+user: process.env.DB_USER || 'root',
+password: process.env.DB_PASSWORD || '',
+
+
+waitForConnections: true,
+connectionLimit: 10,
+queueLimit: 0,
+
+// 🔥 IMPORTANT
+ssl: {
+  rejectUnauthorized: false,
+},
+
+multipleStatements: true,
+
+
+});
+}
+
+// 🔍 Test connection
+pool.getConnection()
+.then(connection => {
+console.log('✅ Connected to MySQL database');
+connection.release();
+})
+.catch(err => {
+console.error('❌ MySQL Connection Error:', err.message);
 });
 
-// Test connection
-pool.getConnection()
-  .then(connection => {
-    console.log('Connected to MySQL database');
-    connection.release();
-  })
-  .catch(err => {
-    console.error('Error connecting to MySQL database:', err);
-  });
-
 module.exports = pool;
-
