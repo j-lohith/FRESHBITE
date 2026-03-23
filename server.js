@@ -52,26 +52,23 @@ app.get("/api/health", (req, res) => {
 
 
 const fs = require("fs");
-const pool = require("./backend/config/db"); // adjust if path different
+const pool = require("./backend/config/db");
 
 app.get("/api/init-db", async (req, res) => {
 try {
-let sql = fs.readFileSync("./backend/database.sq", "utf8");
+let sql = fs.readFileSync("./backend/database.sql", "utf8");
 
+// 🚨 Make sure you already removed:
+// CREATE DATABASE and USE statements
 
-// Split multiple queries (IMPORTANT)
-const queries = sql.split(";").filter(q => q.trim() !== "");
-
-for (let query of queries) {
-  await pool.query(query);
-}
+await pool.query(sql); // ✅ run full SQL at once
 
 res.send("✅ Database Initialized Successfully");
 
 
 } catch (err) {
 console.error("DB INIT ERROR:", err);
-res.status(500).send("❌ Error initializing DB");
+res.status(500).send(err.message); // 👈 show real error
 }
 });
 
