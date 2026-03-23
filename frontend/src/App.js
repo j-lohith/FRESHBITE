@@ -112,7 +112,7 @@ function App() {
             <div className="App">
               <Navbar />
               <Routes>
-                <Route path="/page" element={<page />} />
+                <Route path="/page" element={<Navigate to="/" replace />} />
                 <Route
                   path="/login"
                   element={user ? <Navigate to="/" /> : <Login />}

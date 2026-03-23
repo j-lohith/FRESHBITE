@@ -1,5 +1,4 @@
 import L from 'leaflet';
-import deliveryBikeGif from '../assets/delivery-bike.gif';
 
 const encodeSvg = (svg) => `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
 
@@ -40,7 +39,23 @@ export const storeIcon = L.icon({
 });
 
 export const bikeIcon = L.icon({
-  iconUrl: deliveryBikeGif,
+  iconUrl: encodeSvg(`
+    <svg width="96" height="96" viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#ffb266"/>
+          <stop offset="100%" stop-color="#ff7a00"/>
+        </linearGradient>
+      </defs>
+      <rect x="12" y="14" width="72" height="72" rx="16" fill="#fff7ef" stroke="#ff7a00" stroke-width="4"/>
+      <circle cx="28" cy="66" r="10" fill="none" stroke="url(#g)" stroke-width="6"/>
+      <circle cx="68" cy="66" r="10" fill="none" stroke="url(#g)" stroke-width="6"/>
+      <path d="M34 36H46L56 56H42L34 36Z" fill="url(#g)"/>
+      <path d="M46 36L40 54" stroke="#1a2e5c" stroke-width="4" stroke-linecap="round"/>
+      <path d="M56 56L68 56" stroke="#1a2e5c" stroke-width="4" stroke-linecap="round"/>
+      <path d="M46 36L58 36" stroke="#1a2e5c" stroke-width="4" stroke-linecap="round"/>
+    </svg>
+  `),
   iconSize: [64, 64],
   iconAnchor: [32, 32],
   className: 'delivery-bike-icon',

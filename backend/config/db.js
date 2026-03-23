@@ -1,6 +1,15 @@
 const mysql = require('mysql2/promise');
 require('dotenv').config();
 
+const poolSsl =
+  process.env.DB_SSL === 'true'
+    ? {
+        // Railway/hosted MySQL often requires TLS; this keeps connection working.
+        // If your provider needs strict validation, remove this and set proper CA.
+        rejectUnauthorized: false,
+      }
+    : undefined;
+
 // Create MySQL connection pool
 const pool = mysql.createPool({
   host: process.env.DB_HOST || 'localhost',
@@ -10,7 +19,8 @@ const pool = mysql.createPool({
   password: process.env.DB_PASSWORD || '',
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0
+  queueLimit: 0,
+  ssl: poolSsl,
 });
 
 // Test connection

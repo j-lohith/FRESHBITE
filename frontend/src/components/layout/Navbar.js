@@ -4,7 +4,22 @@ import { FiShoppingCart, FiMenu, FiX } from 'react-icons/fi';
 import { AuthContext } from '../../context/AuthContext';
 import { CartContext } from '../../context/CartContext';
 import './Navbar.css';
-import logo from "../../assets/logo.png"
+
+const logoSvg = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+  <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+    <defs>
+      <linearGradient id="b" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#ffb266"/>
+        <stop offset="100%" stop-color="#ff7a00"/>
+      </linearGradient>
+    </defs>
+    <rect x="8" y="10" width="48" height="44" rx="14" fill="#fff7ef" stroke="url(#b)" stroke-width="3"/>
+    <path d="M20 34c6-14 18-14 24 0" fill="none" stroke="#1a2e5c" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="24" cy="26" r="3" fill="url(#b)"/>
+    <circle cx="40" cy="26" r="3" fill="url(#b)"/>
+    <path d="M24 44h16" stroke="#1a2e5c" stroke-width="4" stroke-linecap="round"/>
+  </svg>
+`)}`;
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
@@ -30,7 +45,9 @@ const Navbar = () => {
         <div className="navbar-container" >
           {/* Logo */}
           <Link to="/" className="navbar-logo">
-            <span className="logo-icon"><img src={logo} className='logo'/></span>
+            <span className="logo-icon">
+              <img src={logoSvg} className='logo' alt="FreshBite" />
+            </span>
             <span className="logo-text">FreshBite</span>
           </Link>
 

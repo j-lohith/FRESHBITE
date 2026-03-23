@@ -1,7 +1,25 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { MapContainer, Marker, Polyline, TileLayer, useMap } from 'react-leaflet';
 import L from 'leaflet';
-import riderGif from '../../assets/delivery-bike.gif';
+
+const encodeSvg = (svg) => `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+
+const riderSvg = encodeSvg(`
+  <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+    <defs>
+      <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#ffb266"/>
+        <stop offset="100%" stop-color="#ff7a00"/>
+      </linearGradient>
+    </defs>
+    <circle cx="60" cy="64" r="24" fill="url(#g)" opacity="0.2"/>
+    <rect x="36" y="40" width="48" height="26" rx="10" fill="#1a2e5c"/>
+    <path d="M44 66l10-22h12l8 22" fill="none" stroke="url(#g)" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="44" cy="86" r="12" fill="none" stroke="#1a2e5c" stroke-width="5"/>
+    <circle cx="88" cy="86" r="12" fill="none" stroke="#1a2e5c" stroke-width="5"/>
+    <path d="M44 86h44" stroke="#ff7a00" stroke-width="6" stroke-linecap="round"/>
+  </svg>
+`);
 
 const FitBounds = ({ path }) => {
   const map = useMap();
@@ -24,7 +42,7 @@ const createPin = (label) =>
 
 const riderIcon = L.divIcon({
   className: 'delivery-rider',
-  html: `<div class="delivery-rider__bubble"><img src="${riderGif}" alt="Delivery rider" /></div>`,
+  html: `<div class="delivery-rider__bubble"><img src="${riderSvg}" alt="Delivery rider" /></div>`,
   iconSize: [70, 70],
   iconAnchor: [35, 35],
 });
