@@ -1,59 +1,41 @@
 const mysql = require('mysql2/promise');
 require('dotenv').config();
 
-// 🔥 If MYSQL_URL exists → use it (BEST for Railway)
 let pool;
 
 if (process.env.MYSQL_URL) {
-pool = mysql.createPool({
-uri: process.env.MYSQL_URL,
+pool = mysql.createPool(
+process.env.MYSQL_URL + "?ssl=%7B%22rejectUnauthorized%22%3Afalse%7D&multipleStatements=true"
+);
 
-
-waitForConnections: true,
-connectionLimit: 10,
-
-// 🔥 REQUIRED for Railway
-ssl: {
-  rejectUnauthorized: false,
-},
-
-multipleStatements: true,
-
-
-});
 } else {
-// 🔁 Fallback (manual config)
 pool = mysql.createPool({
-host: process.env.DB_HOST || 'localhost',
-port: process.env.DB_PORT || 3306,
-database: process.env.DB_NAME || 'restaurant_db',
-user: process.env.DB_USER || 'root',
-password: process.env.DB_PASSWORD || '',
-
+host: process.env.DB_HOST,
+port: process.env.DB_PORT,
+database: process.env.DB_NAME,
+user: process.env.DB_USER,
+password: process.env.DB_PASSWORD,
 
 waitForConnections: true,
 connectionLimit: 10,
-queueLimit: 0,
 
-// 🔥 IMPORTANT
 ssl: {
   rejectUnauthorized: false,
 },
 
 multipleStatements: true,
-
 
 });
 }
 
-// 🔍 Test connection
+// Test connection
 pool.getConnection()
-.then(connection => {
-console.log('✅ Connected to MySQL database');
-connection.release();
+.then(conn => {
+console.log("✅ DB Connected");
+conn.release();
 })
 .catch(err => {
-console.error('❌ MySQL Connection Error:', err.message);
+console.error("❌ DB Error:", err.message);
 });
 
 module.exports = pool;
