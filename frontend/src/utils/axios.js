@@ -3,52 +3,63 @@ import { getToken } from './auth';
 import { loadingManager } from './loadingManager';
 
 const normalizeApiUrl = (value) => {
-  if (!value) return '';
-  // Ensure no trailing slash so we can safely append `/api`.
-  const trimmed = value.trim().replace(/\/+$/, '');
-  return trimmed;
+if (!value) return '';
+return value.trim().replace(/\/+$/, '');
 };
 
+// 🔥 Get backend URL from env
 const rawApiUrl = normalizeApiUrl(process.env.REACT_APP_API_URL);
-// REACT_APP_API_URL should point to your backend host, e.g.:
-// - http://localhost:5000
-// - https://freshbite-backend-production.up.railway.app
+
+// 🚨 IMPORTANT: No fallback to '/api' in production
+if (!rawApiUrl) {
+console.error("❌ REACT_APP_API_URL is NOT defined!");
+}
+
+// ✅ Always construct proper backend API URL
 const apiBaseUrl = rawApiUrl
-  ? rawApiUrl.endsWith('/api')
-    ? rawApiUrl
-    : `${rawApiUrl}/api`
-  : '/api'; // fallback for local/dev if env is not set
+? rawApiUrl.endsWith('/api')
+? rawApiUrl
+: `${rawApiUrl}/api`
+: ''; // no fallback
+
+console.log("🌐 API BASE URL:", apiBaseUrl); // 🔥 DEBUG
 
 const api = axios.create({
-  baseURL: apiBaseUrl,
+baseURL: apiBaseUrl,
 });
 
-// Add token to requests if available
+// 🔐 Attach token
 api.interceptors.request.use(
-  (config) => {
-    const token = getToken();
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    loadingManager.start();
-    return config;
-  },
-  (error) => {
-    loadingManager.stop();
-    return Promise.reject(error);
-  }
+(config) => {
+const token = getToken();
+if (token) {
+config.headers.Authorization = `Bearer ${token}`;
+}
+loadingManager.start();
+return config;
+},
+(error) => {
+loadingManager.stop();
+return Promise.reject(error);
+}
 );
 
+// 📥 Response handler
 api.interceptors.response.use(
-  (response) => {
-    loadingManager.stop();
-    return response;
-  },
-  (error) => {
-    loadingManager.stop();
-    return Promise.reject(error);
-  }
+(response) => {
+loadingManager.stop();
+return response;
+},
+(error) => {
+loadingManager.stop();
+
+
+console.error("❌ API ERROR:", error.response || error.message);
+
+return Promise.reject(error);
+
+
+}
 );
 
 export default api;
-
