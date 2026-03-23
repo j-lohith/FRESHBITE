@@ -2,14 +2,14 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 
-const authRoutes = require("./routes/auth");
-const recipeRoutes = require("./routes/recipes");
-const cartRoutes = require("./routes/cart");
-const orderRoutes = require("./routes/orders");
-const membershipRoutes = require("./routes/membership");
-const paymentRoutes = require("./routes/payment");
-const addressRoutes = require("./routes/addresses");
-const deliveryRoutes = require("./routes/delivery");
+const authRoutes = require("./backend/routes/auth");
+const recipeRoutes = require("./backend/routes/recipes");
+const cartRoutes = require("./backend/routes/cart");
+const orderRoutes = require("./backend/routes/orders");
+const membershipRoutes = require("./backend/routes/membership");
+const paymentRoutes = require("./backend/routes/payment");
+const addressRoutes = require("./backend/routes/addresses");
+const deliveryRoutes = require("./backend/routes/delivery");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
